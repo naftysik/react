@@ -20,7 +20,7 @@ export default function App() {
           </a>{" "}
           and is{" "}
           <a
-            href="https://github.com/naftysik/React-App-7745"
+            href="https://github.com/naftysik/react"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -28,7 +28,7 @@ export default function App() {
           </a>{" "}
           and{" "}
           <a
-            href="https://rainbow-klepon-8d5d2b.netlify.app/"
+            href="https://stupendous-liger-c98793.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
           >
