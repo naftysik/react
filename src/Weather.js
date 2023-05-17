@@ -3,6 +3,7 @@ import WeatherInfo from "./WeatherInfo";
 import "./Weather.css";
 import axios from "axios";
 import Top from "./Top.js";
+import WeatherForecast from "./WeatherForecast";
 
 let apiKey = "72bb9dab46b9ec3d65f423c63f27a9b8";
 
@@ -13,6 +14,8 @@ export default function Weather(props) {
   function handleResponse(response) {
     setWeatherData({
       ready: true,
+      coordinates: response.data.coord,
+
       temperature: Math.round(response.data.main.temp),
       humidity: response.data.main.humidity,
       date: new Date(response.data.dt * 1000),
@@ -38,34 +41,37 @@ export default function Weather(props) {
     axios.get(apiUrl).then(handleResponse);
   }
 
-  return (
-    <div className="Weather">
-      <Top />
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-9">
-            <input
-              type="search"
-              placeholder="Enter a city.."
-              className="form-control"
-              autoFocus="on"
-              onChange={handleCityChange}
-            />
+  if (weatherData.ready) {
+    return (
+      <div className="Weather">
+        <Top />
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-9">
+              <input
+                type="search"
+                placeholder="Enter a city.."
+                className="form-control"
+                autoFocus="on"
+                onChange={handleCityChange}
+              />
+            </div>
+            <div className="col-3">
+              <input
+                type="submit"
+                value="Search"
+                className="btn btn-primary w-100"
+              />
+            </div>
           </div>
-          <div className="col-3">
-            <input
-              type="submit"
-              value="Search"
-              className="btn btn-primary w-100"
-            />
-          </div>
-        </div>
-      </form>
-      {weatherData.ready ? (
+        </form>
+
         <WeatherInfo data={weatherData} />
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
+        <WeatherForecast coordinates={weatherData.coordinates} />
+      </div>
+    );
+  } else {
+    search();
+    return "Loading";
+  }
 }
