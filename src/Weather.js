@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import WeatherInfo from "./WeatherInfo";
 import "./Weather.css";
 import axios from "axios";
@@ -29,8 +29,14 @@ export default function Weather(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    search();
+    let cityReceived = event.target[0].value;
+
+    setCity(cityReceived.trim());
   }
+  useEffect(() => {
+    search();
+    // eslint-disable-next-line
+  }, [city]);
 
   function handleCityChange(event) {
     setCity(event.target.value);
@@ -44,7 +50,7 @@ export default function Weather(props) {
   if (weatherData.ready) {
     return (
       <div className="Weather">
-        <Top />
+        <Top setCity={setCity} />
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-9">
