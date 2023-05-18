@@ -27,6 +27,14 @@ export default function Top(props) {
                   }
                   onClick={showWeather}
                   name={cityName}
+                  style={{
+                    border: "none",
+                    background: "none",
+                    padding: "0",
+                    margin: "0",
+                    textDecoration: "none",
+                    cursor: "pointer",
+                  }}
                 >
                   {cityName}
                 </button>
