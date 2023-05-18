@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Top.css";
 
 export default function Top(props) {
   const [selectedCity, setSelectedCity] = useState(null);
@@ -20,8 +19,7 @@ export default function Top(props) {
           return (
             <div className="col" key={index}>
               <div className="col city">
-                <a
-                  href="#"
+                <button
                   className={
                     selectedCity === cityName
                       ? "up-city-link active"
@@ -31,7 +29,7 @@ export default function Top(props) {
                   name={cityName}
                 >
                   {cityName}
-                </a>
+                </button>
               </div>
             </div>
           );
