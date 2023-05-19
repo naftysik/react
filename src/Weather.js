@@ -10,12 +10,12 @@ let apiKey = "72bb9dab46b9ec3d65f423c63f27a9b8";
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [city, setCity] = useState(props.defaultCity);
+  const [searchCity, setSearchCity] = useState("");
 
   function handleResponse(response) {
     setWeatherData({
       ready: true,
       coordinates: response.data.coord,
-
       temperature: Math.round(response.data.main.temp),
       humidity: response.data.main.humidity,
       date: new Date(response.data.dt * 1000),
@@ -24,23 +24,23 @@ export default function Weather(props) {
       wind: response.data.wind.speed,
       city: response.data.name,
     });
-    console.log(props);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    let cityReceived = event.target[0].value;
-
-    setCity(cityReceived.trim());
+    setCity(searchCity.trim());
   }
-  useEffect(() => {
-    search();
-    // eslint-disable-next-line
-  }, [city]);
 
   function handleCityChange(event) {
-    setCity(event.target.value);
+    setSearchCity(event.target.value);
   }
+
+  useEffect(() => {
+    if (city !== "") {
+      search();
+    }
+    // eslint-disable-next-line
+  }, [city]);
 
   function search() {
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -71,7 +71,6 @@ export default function Weather(props) {
             </div>
           </div>
         </form>
-
         <WeatherInfo data={weatherData} />
         <WeatherForecast coordinates={weatherData.coordinates} />
       </div>
